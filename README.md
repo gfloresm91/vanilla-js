@@ -9,6 +9,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - Funciones asíncronas
 - Selectores
 - Templates
+- Funciones
 
 ## Instalación
 

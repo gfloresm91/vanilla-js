@@ -70,8 +70,8 @@ console.log('ASYNC FUNCTIONS');
     const $modal = document.getElementById('modal')
     const $overlay = document.getElementById('overlay')
     const $hideModal = document.getElementById('hide-modal')
-    const $form = document.getElementById('#form')
-    const $home = document.getElementById('#home')
+    const $form = document.getElementById('form')
+    const $home = document.getElementById('home')
 
     // Search in element
     const $modalTitle = $modal.querySelector('h1')
@@ -92,11 +92,30 @@ console.log('ASYNC FUNCTIONS');
         )
     }
 
-    // Print elements in dom
-    actionList.data.movies.forEach((movie) => {
-        const Html = videoItemTemplate(movie.medium_cover_image, movie.title)
-        const virtualDomHtml = document.implementation.createHTMLDocument();
+    // Create a virtual dom and return a html append
+    function createTemplate(Html) {
+        const virtualDomHtml = document.implementation.createHTMLDocument()
         virtualDomHtml.body.innerHTML = Html
-        $actionContainer.append(virtualDomHtml.body.children[0])
-    })    
+        
+        return virtualDomHtml.body.children[0]
+    }
+
+    function renderMovieList(list, $container) {
+        // remove loading gif
+        $container.children[0].remove()
+        
+        // Print elements in dom
+        list.forEach((movie) => {
+            const Html = videoItemTemplate(movie.medium_cover_image, movie.title)
+            const movieElement = createTemplate(Html)
+            
+            return $container.append(movieElement)
+        })
+    }
+
+    // Call the function for print elements in dom
+    renderMovieList(actionList.data.movies, $actionContainer)
+    renderMovieList(dramaList.data.movies, $dramaContainer)
+    renderMovieList(animationList.data.movies, $animationContainer)
+
 })()
