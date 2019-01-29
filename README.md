@@ -5,6 +5,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 ## Conceptos vistos
 
 - Promesas
+- Ajax con javascript puro y Jquery
 
 ## Instalación
 
