@@ -58,4 +58,23 @@ console.log('ASYNC FUNCTIONS');
     const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
 
     console.log(actionList, dramaList, animationList)
+
+    // Selectors with Jquery
+    // const $actionContainer = $('#action')
+    // Selectors with javascript
+    const $actionContainer = document.querySelector('#action')
+    const $dramaContainer = document.querySelector('#drama')
+    const $animationContainer = document.querySelector('#animation')
+    const $featuringContainer = document.querySelector('#featuring')
+
+    const $modal = document.getElementById('modal')
+    const $overlay = document.getElementById('overlay')
+    const $hideModal = document.getElementById('hide-modal')
+    const $form = document.getElementById('#form')
+    const $home = document.getElementById('#home')
+
+    // Search in element
+    const $modalTitle = $modal.querySelector('h1')
+    const $modalImage = $modal.querySelector('img')
+    const $modalDescription = $modal.querySelector('p')
 })()
