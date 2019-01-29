@@ -6,6 +6,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 
 - Promesas
 - Ajax con javascript puro y Jquery
+- Funciones asíncronas
 
 ## Instalación
 
