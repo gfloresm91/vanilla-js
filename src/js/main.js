@@ -77,4 +77,26 @@ console.log('ASYNC FUNCTIONS');
     const $modalTitle = $modal.querySelector('h1')
     const $modalImage = $modal.querySelector('img')
     const $modalDescription = $modal.querySelector('p')
+
+    // Templates
+    function videoItemTemplate(src, title) {
+        return (
+            `<div class="primaryPlaylistItem">
+                <div class="primaryPlaylistItem-image">
+                    <img src="${src}">
+                </div>  
+                <h4 class="primaryPlaylistItem-title">
+                    ${title}
+                </h4>
+            </div>`
+        )
+    }
+
+    // Print elements in dom
+    actionList.data.movies.forEach((movie) => {
+        const Html = videoItemTemplate(movie.medium_cover_image, movie.title)
+        const virtualDomHtml = document.implementation.createHTMLDocument();
+        virtualDomHtml.body.innerHTML = Html
+        $actionContainer.append(virtualDomHtml.body.children[0])
+    })    
 })()
