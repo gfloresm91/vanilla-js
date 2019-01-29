@@ -53,11 +53,16 @@ console.log('ASYNC FUNCTIONS');
 
         return data
     }
+
+    const $form = document.getElementById('form')
+    // Events: submit
+    $form.addEventListener('submit', (event) => {
+        event.preventDefault()
+    })
+
     const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action')
     const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama')
     const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
-
-    console.log(actionList, dramaList, animationList)
 
     // Selectors with Jquery
     // const $actionContainer = $('#action')
@@ -70,7 +75,6 @@ console.log('ASYNC FUNCTIONS');
     const $modal = document.getElementById('modal')
     const $overlay = document.getElementById('overlay')
     const $hideModal = document.getElementById('hide-modal')
-    const $form = document.getElementById('form')
     const $home = document.getElementById('home')
 
     // Search in element
@@ -100,16 +104,24 @@ console.log('ASYNC FUNCTIONS');
         return virtualDomHtml.body.children[0]
     }
 
+     // Events: click
+     function addEventClick($element) {
+        $element.addEventListener('click', () => alert('click'))
+    }
+
     function renderMovieList(list, $container) {
         // remove loading gif
-        $container.children[0].remove()
+        $container.children[0].remove();
         
         // Print elements in dom
         list.forEach((movie) => {
             const Html = videoItemTemplate(movie.medium_cover_image, movie.title)
-            const movieElement = createTemplate(Html)
+            const movieElement = createTemplate(Html);
             
-            return $container.append(movieElement)
+            $container.append(movieElement)
+
+            // Call function with event listener
+            addEventClick(movieElement)
         })
     }
 
@@ -117,5 +129,7 @@ console.log('ASYNC FUNCTIONS');
     renderMovieList(actionList.data.movies, $actionContainer)
     renderMovieList(dramaList.data.movies, $dramaContainer)
     renderMovieList(animationList.data.movies, $animationContainer)
+
+
 
 })()

@@ -10,6 +10,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - Selectores
 - Templates
 - Funciones
+- Eventos: click y submit
 
 ## Instalación
 
