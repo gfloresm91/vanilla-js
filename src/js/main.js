@@ -101,10 +101,15 @@ console.log('ASYNC FUNCTIONS');
 
         // Forms
         const data = new FormData($form)
-        const movie = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
+        const { 
+            data: {
+                movie_count,
+                movies: movie
+            }
+        } = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
         
-        if (movie.data.movie_count != 0) {
-            const Html = featuringTemplate(movie.data.movies[0])
+        if (movie_count != 0) {
+            const Html = featuringTemplate(movie[0])
             $featuringContainer.innerHTML = Html
         }
         else {

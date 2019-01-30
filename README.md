@@ -14,6 +14,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - Clases y estilos CSS
 - Creación de elementos y asignación de atributos
 - Formularios
+- Desestructuración de objetos
 
 ## Instalación
 
