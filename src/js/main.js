@@ -125,9 +125,9 @@ console.log('ASYNC FUNCTIONS');
         
     })
 
-    const actionList = await getData(`${BASE_API}list_movies.json?genre=action`)
-    const dramaList = await getData(`${BASE_API}list_movies.json?genre=drama`)
-    const animationList = await getData(`${BASE_API}list_movies.json?genre=animation`)
+    const { data: { movies:  actionList }} = await getData(`${BASE_API}list_movies.json?genre=action`)
+    const { data: { movies:  dramaList }} = await getData(`${BASE_API}list_movies.json?genre=drama`)
+    const { data: { movies:  animationList }} = await getData(`${BASE_API}list_movies.json?genre=animation`)
 
     // Selectors with Jquery
     // const $actionContainer = $('#action')
@@ -146,22 +146,50 @@ console.log('ASYNC FUNCTIONS');
     const $modalDescription = $modal.querySelector('p')
 
     // Templates
-    function videoItemTemplate(src, title) {
+    function videoItemTemplate(movie, category) {
         return (
-            `<div class="primaryPlaylistItem">
+            `<div class="primaryPlaylistItem" data-id="${movie.id}" data-category="${category}">
                 <div class="primaryPlaylistItem-image">
-                    <img src="${src}">
+                    <img src="${movie.medium_cover_image}">
                 </div>  
                 <h4 class="primaryPlaylistItem-title">
-                    ${title}
+                    ${movie.title}
                 </h4>
             </div>`
         )
     }
 
-    function showModal() {
+    function findById(list, id) {
+        return list.find((movie) => movie.id === parseInt(id, 10))
+    }
+
+    function findMovie(id, category) {
+        switch (category) {
+            case 'action':
+                return findById(actionList, id)            
+            break;
+            case 'drama':
+                return findById(dramaList, id)     
+            break;
+        
+            default:
+                return findById(animationList, id)
+            break;
+        }
+    }
+
+    function showModal($element) {
         $overlay.classList.add('active')
         $modal.style.animation = 'modalIn .8s forwards'
+        const id = $element.dataset.id
+        const category = $element.dataset.category
+
+        // Find elements in a list
+        const data = findMovie(id, category)
+
+        $modalTitle.textContent = data.title
+        $modalImage.setAttribute('src', data.medium_cover_image)
+        $modalDescription.textContent = data.description_full
     }
 
     function hideModal() {
@@ -182,17 +210,17 @@ console.log('ASYNC FUNCTIONS');
      // Events: click
      function addEventClick($element) {
         $element.addEventListener('click', () => {
-            showModal()
+            showModal($element)
         })
     }
 
-    function renderMovieList(list, $container) {
+    function renderMovieList(list, $container, category) {
         // remove loading gif
         $container.children[0].remove();
         
         // Print elements in dom
         list.forEach((movie) => {
-            const Html = videoItemTemplate(movie.medium_cover_image, movie.title)
+            const Html = videoItemTemplate(movie, category)
             const movieElement = createTemplate(Html);
             
             $container.append(movieElement)
@@ -203,7 +231,7 @@ console.log('ASYNC FUNCTIONS');
     }
 
     // Call the function for print elements in dom
-    renderMovieList(actionList.data.movies, $actionContainer)
-    renderMovieList(dramaList.data.movies, $dramaContainer)
-    renderMovieList(animationList.data.movies, $animationContainer)
+    renderMovieList(actionList, $actionContainer, 'action')
+    renderMovieList(dramaList, $dramaContainer, 'drama')
+    renderMovieList(animationList, $animationContainer, 'animation')
 })()
