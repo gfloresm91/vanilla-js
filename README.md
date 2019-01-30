@@ -12,6 +12,8 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - Funciones
 - Eventos: click y submit
 - Clases y estilos CSS
+- Creación de elementos y asignación de atributos
+- Formularios
 
 ## Instalación
 

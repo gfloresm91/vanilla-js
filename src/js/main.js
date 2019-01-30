@@ -59,17 +59,70 @@ console.log('ASYNC FUNCTIONS');
     const $featuringContainer = document.querySelector('#featuring')
     $featuringContainer.style.display = 'none'
 
+    function setAttributes($element, attributes) {
+        for(const attribute in attributes) {
+           $element.setAttribute(attribute, attributes[attribute])
+        }
+    }
+
+    const BASE_API = 'https://yts.am/api/v2/'
+
+    function featuringTemplate(movie) {
+        return (
+            `
+                <div class="featuring">
+                    <div class="featuring-image">
+                        <img src="${movie.medium_cover_image}" width="70" height="100" alt="">
+                    </div>
+                    <div class="featuring-content">
+                        <p class="featuring-title">Película encontrada</p>
+                        <p class="featuring-album">${movie.title}</p>
+                    </div>
+                </div>
+            `
+        )
+    }
+
     // Events: submit
-    $form.addEventListener('submit', (event) => {
+    $form.addEventListener('submit', async (event) => {
         // prevent reloading page
         event.preventDefault()
         $featuringContainer.style.display = ''
         $home.classList.add('search-active')
+
+        // Create elements and set attributes
+        const $loader = document.createElement('img')
+        setAttributes($loader, {
+            src: 'src/images/loader.gif',
+            height: 50,
+            width: 50
+        })
+        $featuringContainer.append($loader)
+
+        // Forms
+        const data = new FormData($form)
+        const movie = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
+        
+        if (movie.data.movie_count != 0) {
+            const Html = featuringTemplate(movie.data.movies[0])
+            $featuringContainer.innerHTML = Html
+        }
+        else {
+            movieNotFound = {
+                medium_cover_image: 'src/images/html5.jpg',
+                title: 'No se encontro la película'
+            }
+                
+            const Html = featuringTemplate(movieNotFound)
+            $featuringContainer.innerHTML = Html
+        }
+        
+        
     })
 
-    const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action')
-    const dramaList = await getData('https://yts.am/api/v2/list_movies.json?genre=drama')
-    const animationList = await getData('https://yts.am/api/v2/list_movies.json?genre=animation')
+    const actionList = await getData(`${BASE_API}list_movies.json?genre=action`)
+    const dramaList = await getData(`${BASE_API}list_movies.json?genre=drama`)
+    const animationList = await getData(`${BASE_API}list_movies.json?genre=animation`)
 
     // Selectors with Jquery
     // const $actionContainer = $('#action')
