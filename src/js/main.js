@@ -55,9 +55,16 @@ console.log('ASYNC FUNCTIONS');
     }
 
     const $form = document.getElementById('form')
+    const $home = document.getElementById('home')
+    const $featuringContainer = document.querySelector('#featuring')
+    $featuringContainer.style.display = 'none'
+
     // Events: submit
     $form.addEventListener('submit', (event) => {
+        // prevent reloading page
         event.preventDefault()
+        $featuringContainer.style.display = ''
+        $home.classList.add('search-active')
     })
 
     const actionList = await getData('https://yts.am/api/v2/list_movies.json?genre=action')
@@ -70,12 +77,10 @@ console.log('ASYNC FUNCTIONS');
     const $actionContainer = document.querySelector('#action')
     const $dramaContainer = document.querySelector('#drama')
     const $animationContainer = document.querySelector('#animation')
-    const $featuringContainer = document.querySelector('#featuring')
 
     const $modal = document.getElementById('modal')
     const $overlay = document.getElementById('overlay')
     const $hideModal = document.getElementById('hide-modal')
-    const $home = document.getElementById('home')
 
     // Search in element
     const $modalTitle = $modal.querySelector('h1')
@@ -96,6 +101,18 @@ console.log('ASYNC FUNCTIONS');
         )
     }
 
+    function showModal() {
+        $overlay.classList.add('active')
+        $modal.style.animation = 'modalIn .8s forwards'
+    }
+
+    function hideModal() {
+        $overlay.classList.remove('active')
+        $modal.style.animation = 'modalOut .8s forwards'
+    }
+
+    $hideModal.addEventListener('click', hideModal)
+
     // Create a virtual dom and return a html append
     function createTemplate(Html) {
         const virtualDomHtml = document.implementation.createHTMLDocument()
@@ -106,7 +123,9 @@ console.log('ASYNC FUNCTIONS');
 
      // Events: click
      function addEventClick($element) {
-        $element.addEventListener('click', () => alert('click'))
+        $element.addEventListener('click', () => {
+            showModal()
+        })
     }
 
     function renderMovieList(list, $container) {
@@ -129,7 +148,4 @@ console.log('ASYNC FUNCTIONS');
     renderMovieList(actionList.data.movies, $actionContainer)
     renderMovieList(dramaList.data.movies, $dramaContainer)
     renderMovieList(animationList.data.movies, $animationContainer)
-
-
-
 })()

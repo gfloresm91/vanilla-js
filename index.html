@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Vanilla js</title>
@@ -7,13 +8,14 @@
   <link rel="stylesheet" href="src/css/home.css" />
   <link rel="stylesheet" href="src/css/modal.css" />
 </head>
+
 <body>
   <section class="home" id="home">
     <div class="home-sidebar">
       <div class="sidebar">
         <div class="logo">
           <figure class="logo-image">
-            <img src="src/images/platzi-video.png" alt="Vanilla js"/>
+            <img src="src/images/platzi-video.png" alt="Vanilla js" />
           </figure>
         </div>
         <div class="sidebarPlaylist">
@@ -158,46 +160,54 @@
     </div>
     <div class="home-primary">
       <!-- <section class="primary"> -->
-        <div class="primary-search">
-          <form action="" class="search" id="form">
-            <input type="text" name="name" placeholder="Buscar un artista o tema favorito"/>
-          </form>
+      <div class="primary-search">
+        <form action="" class="search" id="form">
+          <input type="text" name="name" placeholder="Buscar un artista o tema favorito" />
+        </form>
+      </div>
+      <div class="primary-user">
+        <div class="user">
+          <p>
+            <img src="src/images/covers/avatar.jpg" alt="" />
+            <span>Gabriel Flores</span>
+          </p>
         </div>
-        <div class="primary-user">
-          <div class="user">
-            <p>
-              <img src="src/images/covers/avatar.jpg" alt=""/>
-              <span>Gabriel Flores</span>
-            </p>
-          </div>
-        </div>
-        <div class="primary-list">
-          <div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">A los golpes</h3>
-            <h2 class="primaryPlaylist-title">Acción</h2>
-            <div class="primaryPlaylist-list" id="action">
-              <img src="src/images/loader.gif" width="50" height="50" alt="">
-            </div>
-          </div>
-          <div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">Para llorar</h3>
-            <h2 class="primaryPlaylist-title">Drama</h2>
-            <div class="primaryPlaylist-list" id="drama">
-              <img src="src/images/loader.gif" width="50" height="50" alt="">
-            </div>
-          </div>
-          <div class="primaryPlaylist">
-            <h3 class="primaryPlaylist-topic">Dibujitos animados</h3>
-            <h2 class="primaryPlaylist-title">Animación</h2>
-            <div class="primaryPlaylist-list" id="animation">
-              <img src="src/images/loader.gif" width="50" height="50" alt="">
-            </div>
+      </div>
+      <div class="primary-list">
+        <div class="primaryPlaylist">
+          <h3 class="primaryPlaylist-topic">A los golpes</h3>
+          <h2 class="primaryPlaylist-title">Acción</h2>
+          <div class="primaryPlaylist-list" id="action">
+            <img src="src/images/loader.gif" width="50" height="50" alt="">
           </div>
         </div>
+        <div class="primaryPlaylist">
+          <h3 class="primaryPlaylist-topic">Para llorar</h3>
+          <h2 class="primaryPlaylist-title">Drama</h2>
+          <div class="primaryPlaylist-list" id="drama">
+            <img src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+        <div class="primaryPlaylist">
+          <h3 class="primaryPlaylist-topic">Dibujitos animados</h3>
+          <h2 class="primaryPlaylist-title">Animación</h2>
+          <div class="primaryPlaylist-list" id="animation">
+            <img src="src/images/loader.gif" width="50" height="50" alt="">
+          </div>
+        </div>
+      </div>
       <!-- </section> -->
     </div>
     <div class="home-featuring" id="featuring">
-
+      <div class="featuring">
+        <div class="featuring-image">
+          <img src="src/images/covers/solar-sailer.jpg" width="70" height="100" alt="">
+        </div>
+        <div class="featuring-content">
+          <p class="featuring-title">Pelicula encontrada</p>
+          <p class="featuring-album">titulo de la peli</p>
+        </div>
+      </div>
     </div>
   </section>
   <div class="overlay" id="overlay">
@@ -206,7 +216,8 @@
     <h1>Título de pelicula</h1>
     <div class="modal-content">
       <img src="" alt="" width="170" height="256">
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione impedit maiores enim alias ex accusantium quasi cum autem, nam, voluptas tenetur laudantium quod! Odit voluptate illo, voluptas vel quia, quae.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ratione impedit maiores enim alias ex accusantium
+        quasi cum autem, nam, voluptas tenetur laudantium quod! Odit voluptate illo, voluptas vel quia, quae.</p>
     </div>
     <div class="modal-buttons">
       <button class="modal-btn primary" id="hide-modal">Cerrar Modal</button>
@@ -216,4 +227,5 @@
   <script src="src/js/main.js"></script>
 
 </body>
+
 </html>
