@@ -44,7 +44,6 @@
 //     .catch(() => console.log('Error'));
 
 // async functions
-console.log('ASYNC FUNCTIONS');
 (async function load() {
     //await
     async function getData(url) {
@@ -124,10 +123,6 @@ console.log('ASYNC FUNCTIONS');
         
         
     })
-
-    const { data: { movies:  actionList }} = await getData(`${BASE_API}list_movies.json?genre=action`)
-    const { data: { movies:  dramaList }} = await getData(`${BASE_API}list_movies.json?genre=drama`)
-    const { data: { movies:  animationList }} = await getData(`${BASE_API}list_movies.json?genre=animation`)
 
     // Selectors with Jquery
     // const $actionContainer = $('#action')
@@ -225,13 +220,26 @@ console.log('ASYNC FUNCTIONS');
             
             $container.append(movieElement)
 
+            // Animations
+            const image = movieElement.querySelector('img')
+            image.addEventListener('load', 
+            (event) => event.srcElement.classList.add('fadeIn'))
+
             // Call function with event listener
             addEventClick(movieElement)
         })
     }
 
     // Call the function for print elements in dom
+    const { data: { movies:  actionList }} = 
+    await getData(`${BASE_API}list_movies.json?genre=action`)
     renderMovieList(actionList, $actionContainer, 'action')
+    
+    const { data: { movies:  dramaList }} = 
+    await getData(`${BASE_API}list_movies.json?genre=drama`)
     renderMovieList(dramaList, $dramaContainer, 'drama')
+    
+    const { data: { movies:  animationList }} = 
+    await getData(`${BASE_API}list_movies.json?genre=animation`)
     renderMovieList(animationList, $animationContainer, 'animation')
 })()
