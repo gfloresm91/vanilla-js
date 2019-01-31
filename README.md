@@ -17,6 +17,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - Desestructuración de objetos
 - DataSet
 - Animaciones
+- Manejo de errores
 
 ## Instalación
 

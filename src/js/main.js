@@ -50,7 +50,10 @@
         const response = await fetch(url)
         const data = await response.json()
 
-        return data
+        if(data.data.movie_count != 0)
+            return data
+
+        throw new Error('No se encontró ningún resultado')
     }
 
     const $form = document.getElementById('form')
@@ -98,29 +101,39 @@
         })
         $featuringContainer.append($loader)
 
-        // Forms
-        const data = new FormData($form)
-        const { 
-            data: {
-                movie_count,
-                movies: movie
-            }
-        } = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
-        
-        if (movie_count != 0) {
+        // Errors
+        try {
+            // Forms
+            const data = new FormData($form)
+            const { 
+                data: {
+                    movie_count,
+                    movies: movie
+                }
+            } = await getData(`${BASE_API}list_movies.json?limit=1&query_term=${data.get('name')}`)
+            
             const Html = featuringTemplate(movie[0])
             $featuringContainer.innerHTML = Html
+        } catch (error) {
+            // This error is configurate in getData function with throw
+            alert(error.message)
+            $loader.remove()
+            $home.classList.remove('search-active')
         }
-        else {
-            movieNotFound = {
-                medium_cover_image: 'src/images/html5.jpg',
-                title: 'No se encontro la película'
-            }
+
+        // if (movie_count != 0) {
+        //     const Html = featuringTemplate(movie[0])
+        //     $featuringContainer.innerHTML = Html
+        // }
+        // else {
+        //     movieNotFound = {
+        //         medium_cover_image: 'src/images/html5.jpg',
+        //         title: 'No se encontro la película'
+        //     }
                 
-            const Html = featuringTemplate(movieNotFound)
-            $featuringContainer.innerHTML = Html
-        }
-        
+        //     const Html = featuringTemplate(movieNotFound)
+        //     $featuringContainer.innerHTML = Html
+        // }
         
     })
 
