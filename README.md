@@ -18,6 +18,7 @@ En este proyecto se creará una página web utilizando solamente javascript puro
 - DataSet
 - Animaciones
 - Manejo de errores
+- LocalStorage
 
 ## Instalación
 

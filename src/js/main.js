@@ -147,6 +147,7 @@
     const $actionContainer = document.querySelector('#action')
     const $dramaContainer = document.querySelector('#drama')
     const $animationContainer = document.querySelector('#animation')
+    const $usersContainer = document.querySelector('.playlistFriends')
 
     const $modal = document.getElementById('modal')
     const $overlay = document.getElementById('overlay')
@@ -284,21 +285,33 @@
         })
     }
 
+    // Local storage
+    async function cacheExist(category) {
+        const listName = `${category}List`
+        const cacheList = window.localStorage.getItem(listName)
+
+        if (cacheList) {
+            return JSON.parse(cacheList)
+        }
+
+        const { data: { movies:  data }} = await getData(`${BASE_API}list_movies.json?genre=${category}`)
+        window.localStorage.setItem(listName, JSON.stringify(data))
+        
+        return data
+    }
+
     const { results: users } =
     await getData(`https://randomuser.me/api/?exc=info,registered,timezone,nat&results=20`)
-    const $usersContainer = document.querySelector('.playlistFriends')
+    window.localStorage.setItem('users', JSON.stringify(users))
     renderUsers(users, $usersContainer)
 
     // Call the function for print elements in dom
-    const { data: { movies:  actionList }} = 
-    await getData(`${BASE_API}list_movies.json?genre=action`)
+    const actionList =  await cacheExist('action')
     renderMovieList(actionList, $actionContainer, 'action')
     
-    const { data: { movies:  dramaList }} = 
-    await getData(`${BASE_API}list_movies.json?genre=drama`)
+    const dramaList = await cacheExist('drama')
     renderMovieList(dramaList, $dramaContainer, 'drama')
     
-    const { data: { movies:  animationList }} = 
-    await getData(`${BASE_API}list_movies.json?genre=animation`)
+    const animationList = await cacheExist('animation')   
     renderMovieList(animationList, $animationContainer, 'animation')
 })()
