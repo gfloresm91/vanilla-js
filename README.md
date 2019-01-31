@@ -2,6 +2,8 @@
 
 En este proyecto se creará una página web utilizando solamente javascript puro (o vanilla js)
 
+**Demo: https://gfloresm91.github.io/vanilla-js/**
+
 ## Conceptos vistos
 
 - Promesas
