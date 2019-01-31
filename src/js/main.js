@@ -50,8 +50,12 @@
         const response = await fetch(url)
         const data = await response.json()
 
-        if(data.data.movie_count != 0)
+        if(data.data && data.movie_count != 0)
+        {
             return data
+        }else if (data.results) {
+            return data
+        }
 
         throw new Error('No se encontró ningún resultado')
     }
@@ -167,8 +171,27 @@
         )
     }
 
+    function userTemplate(user) {
+        return (
+            `
+                <li class="playlistFriends-item" data-uuid=${user.login.uuid}>
+                    <a href="#">
+                        <img src="${user.picture.thumbnail}" alt="user picture" />
+                        <span>
+                            ${user.login.username}
+                        </span>
+                    </a>
+                </li>
+            `
+        )
+    }
+
     function findById(list, id) {
         return list.find((movie) => movie.id === parseInt(id, 10))
+    }
+
+    function findByUuid(list, uuid) {
+        return list.find((user) => user.login.uuid === uuid)
     }
 
     function findMovie(id, category) {
@@ -242,6 +265,29 @@
             addEventClick(movieElement)
         })
     }
+
+    function renderUsers(list, $container) {
+        // remove loading gif
+        $container.children[0].remove();
+        
+        // Print elements in dom
+        list.forEach((user) => {
+            const Html = userTemplate(user)
+            const userElement = createTemplate(Html);
+            
+            $container.append(userElement)
+
+            // Animations
+            const image = userElement.querySelector('img')
+            image.addEventListener('load', 
+            (event) => event.srcElement.classList.add('fadeIn'))
+        })
+    }
+
+    const { results: users } =
+    await getData(`https://randomuser.me/api/?exc=info,registered,timezone,nat&results=20`)
+    const $usersContainer = document.querySelector('.playlistFriends')
+    renderUsers(users, $usersContainer)
 
     // Call the function for print elements in dom
     const { data: { movies:  actionList }} = 
